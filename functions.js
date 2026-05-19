@@ -346,9 +346,11 @@ function CURP_ESTADO(curp) {
 
 // =================== REGISTRO DE FUNCIONES ==================
 
-CustomFunctions.associate("CURP.GENERAR", GENERAR_CURP);
-CustomFunctions.associate("RFC.GENERAR",  GENERAR_RFC);
-CustomFunctions.associate("CURP.FECHA",   CURP_FECHA);
-CustomFunctions.associate("CURP.SEXO",    CURP_SEXO);
-CustomFunctions.associate("CURP.EDAD",    CURP_EDAD);
-CustomFunctions.associate("CURP.ESTADO",  CURP_ESTADO);
+Office.onReady(function() {
+  CustomFunctions.associate("CURP.GENERAR", GENERAR_CURP);
+  CustomFunctions.associate("RFC.GENERAR",  GENERAR_RFC);
+  CustomFunctions.associate("CURP.FECHA",   CURP_FECHA);
+  CustomFunctions.associate("CURP.SEXO",    CURP_SEXO);
+  CustomFunctions.associate("CURP.EDAD",    CURP_EDAD);
+  CustomFunctions.associate("CURP.ESTADO",  CURP_ESTADO);
+});
