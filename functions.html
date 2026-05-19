@@ -6,12 +6,15 @@
   <script src="https://appsforoffice.microsoft.com/lib/1/hosted/office.js" type="text/javascript"></script>
   <script>
     Office.onReady(function() {
-      var s = document.createElement("script");
-      s.src = "functions.js";
-      document.head.appendChild(s);
+      CustomFunctions.associate("CURP.GENERAR", GENERAR_CURP);
+      CustomFunctions.associate("CURP.RFC",     GENERAR_RFC);
+      CustomFunctions.associate("CURP.FECHA",   CURP_FECHA);
+      CustomFunctions.associate("CURP.SEXO",    CURP_SEXO);
+      CustomFunctions.associate("CURP.EDAD",    CURP_EDAD);
+      CustomFunctions.associate("CURP.ESTADO",  CURP_ESTADO);
     });
   </script>
+  <script src="functions.js"></script>
 </head>
-<body>
-</body>
+<body></body>
 </html>
