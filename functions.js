@@ -11,9 +11,6 @@
 
 function limpiarTexto(txt) {
   if (!txt) return "";
-  const desde = "ÁÉÍÓÚÜÑáéíóúüñ";
-  const hacia  = "AEIOUUNAEIOUU N".toUpperCase().split("");
-  // Corrección: tabla de reemplazos explícita
   const mapa = {
     "Á":"A","É":"E","Í":"I","Ó":"O","Ú":"U","Ü":"U","Ñ":"N",
     "á":"A","é":"E","í":"I","ó":"O","ú":"U","ü":"U","ñ":"N"
@@ -39,12 +36,11 @@ function primeraVocalInterna(txt) {
 function consonanteInterna(txt) {
   if (!txt) return "X";
   for (let i = 1; i < txt.length; i++) {
-    if (!esVocal(txt[i]) && txt[i] !== "Ñ") return txt[i];
+    if (!esVocal(txt[i]) && txt[i] !== "N") return txt[i];
   }
   return "X";
 }
 
-// FIX: normalizarSexo corregida — "M" sola = Mujer
 function normalizarSexo(sexo) {
   sexo = limpiarTexto(sexo);
   if (["H", "HOMBRE", "MASCULINO"].includes(sexo)) return "H";
@@ -74,7 +70,7 @@ function normalizarEstadoCURP(estado) {
 // =================== CURP ===================================
 
 function curpValorCaracter(ch) {
-  const tabla = "0123456789ABCDEFGHIJKLMNÑOPQRSTUVWXYZ";
+  const tabla = "0123456789ABCDEFGHIJKLMNNOPQRSTUVWXYZ";
   return tabla.indexOf(ch);
 }
 
@@ -98,11 +94,11 @@ function GENERAR_CURP(nombre, paterno, materno, fechaNacimiento, sexo, estado) {
     estado  = normalizarEstadoCURP(estado);
 
     if (!paterno) return "ERROR: Falta apellido paterno";
-    if (!sexo)   return "ERROR: Sexo inválido (usa H/M/Hombre/Mujer)";
-    if (!estado) return "ERROR: Estado inválido";
+    if (!sexo)   return "ERROR: Sexo invalido (usa H/M/Hombre/Mujer)";
+    if (!estado) return "ERROR: Estado invalido";
 
     const fecha = new Date(fechaNacimiento + "T12:00:00");
-    if (isNaN(fecha)) return "ERROR: Fecha inválida";
+    if (isNaN(fecha)) return "ERROR: Fecha invalida";
 
     const yy = String(fecha.getFullYear()).slice(-2);
     const mm = String(fecha.getMonth() + 1).padStart(2, "0");
@@ -180,7 +176,7 @@ function rfcHomoclave(nombre, paterno, materno) {
   for (const ch of nombreComp) {
     const code = ch.charCodeAt(0);
     if (ch === " " || ch === "-") { cadena += "00"; }
-    else if (ch === "Ñ" || ch === "Ü") { cadena += "10"; }
+    else if (ch === "N" || ch === "U") { cadena += "10"; }
     else if (code >= 65 && code <= 73) { cadena += String(code - 54); }
     else if (code >= 74 && code <= 82) { cadena += String(code - 53); }
     else if (code >= 83 && code <= 90) { cadena += String(code - 51); }
@@ -217,7 +213,7 @@ function rfcDigitoVerificador(rfc) {
 }
 
 /**
- * Genera el RFC de una persona física.
+ * Genera el RFC de una persona fisica.
  * @customfunction
  * @param {string} nombre Nombre(s) de la persona
  * @param {string} paterno Apellido paterno
@@ -232,7 +228,7 @@ function GENERAR_RFC(nombre, paterno, materno, fechaNacimiento) {
     materno = limpiarTexto(materno || "");
 
     const fecha = new Date(fechaNacimiento + "T12:00:00");
-    if (isNaN(fecha)) return "ERROR: Fecha inválida";
+    if (isNaN(fecha)) return "ERROR: Fecha invalida";
 
     const yy = String(fecha.getFullYear()).slice(-2);
     const mm = String(fecha.getMonth() + 1).padStart(2, "0");
@@ -275,7 +271,7 @@ function GENERAR_RFC(nombre, paterno, materno, fechaNacimiento) {
  */
 function CURP_FECHA(curp) {
   curp = limpiarTexto(curp);
-  if (curp.length !== 18) return "ERROR: CURP inválida";
+  if (curp.length !== 18) return "ERROR: CURP invalida";
   const anio = parseInt(curp.slice(4, 6));
   const mes  = curp.slice(6, 8);
   const dia  = curp.slice(8, 10);
@@ -291,7 +287,7 @@ function CURP_FECHA(curp) {
  */
 function CURP_SEXO(curp) {
   curp = limpiarTexto(curp);
-  if (curp.length !== 18) return "ERROR: CURP inválida";
+  if (curp.length !== 18) return "ERROR: CURP invalida";
   return curp[10] === "H" ? "Hombre" : curp[10] === "M" ? "Mujer" : "ERROR";
 }
 
@@ -299,7 +295,7 @@ function CURP_SEXO(curp) {
  * Calcula la edad actual desde una CURP.
  * @customfunction
  * @param {string} curp CURP de 18 caracteres
- * @returns {number} Edad en años
+ * @returns {number} Edad en anos
  */
 function CURP_EDAD(curp) {
   const fechaStr = CURP_FECHA(curp);
@@ -319,28 +315,27 @@ function CURP_EDAD(curp) {
  */
 function CURP_ESTADO(curp) {
   curp = limpiarTexto(curp);
-  if (curp.length !== 18) return "ERROR: CURP inválida";
+  if (curp.length !== 18) return "ERROR: CURP invalida";
   const cod = curp.slice(11, 13);
   const estados = {
     AS:"Aguascalientes", BC:"Baja California", BS:"Baja California Sur",
     CC:"Campeche", CS:"Chiapas", CH:"Chihuahua", CL:"Coahuila", CM:"Colima",
-    DF:"Ciudad de México", DG:"Durango", GT:"Guanajuato", GR:"Guerrero",
-    HG:"Hidalgo", JC:"Jalisco", MC:"México", MN:"Michoacán", MS:"Morelos",
-    NT:"Nayarit", NL:"Nuevo León", OC:"Oaxaca", PL:"Puebla", QT:"Querétaro",
-    QR:"Quintana Roo", SP:"San Luis Potosí", SL:"Sinaloa", SR:"Sonora",
+    DF:"Ciudad de Mexico", DG:"Durango", GT:"Guanajuato", GR:"Guerrero",
+    HG:"Hidalgo", JC:"Jalisco", MC:"Mexico", MN:"Michoacan", MS:"Morelos",
+    NT:"Nayarit", NL:"Nuevo Leon", OC:"Oaxaca", PL:"Puebla", QT:"Queretaro",
+    QR:"Quintana Roo", SP:"San Luis Potosi", SL:"Sinaloa", SR:"Sonora",
     TC:"Tabasco", TS:"Tamaulipas", TL:"Tlaxcala", VZ:"Veracruz",
-    YN:"Yucatán", ZS:"Zacatecas", NE:"Extranjero"
+    YN:"Yucatan", ZS:"Zacatecas", NE:"Extranjero"
   };
   return estados[cod] || "Desconocido";
 }
 
 // =================== REGISTRO DE FUNCIONES ==================
+// IMPORTANTE: CustomFunctions.associate debe estar fuera de Office.onReady
 
-Office.onReady(function() {
-  CustomFunctions.associate("CURP.GENERAR", GENERAR_CURP);
-  CustomFunctions.associate("CURP.RFC",     GENERAR_RFC);
-  CustomFunctions.associate("CURP.FECHA",   CURP_FECHA);
-  CustomFunctions.associate("CURP.SEXO",    CURP_SEXO);
-  CustomFunctions.associate("CURP.EDAD",    CURP_EDAD);
-  CustomFunctions.associate("CURP.ESTADO",  CURP_ESTADO);
-});
+CustomFunctions.associate("CURP.GENERAR", GENERAR_CURP);
+CustomFunctions.associate("CURP.RFC",     GENERAR_RFC);
+CustomFunctions.associate("CURP.FECHA",   CURP_FECHA);
+CustomFunctions.associate("CURP.SEXO",    CURP_SEXO);
+CustomFunctions.associate("CURP.EDAD",    CURP_EDAD);
+CustomFunctions.associate("CURP.ESTADO",  CURP_ESTADO);
