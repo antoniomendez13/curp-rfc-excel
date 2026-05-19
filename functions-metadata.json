@@ -32,7 +32,7 @@
         },
         {
           "name": "fechaNacimiento",
-          "description": "Fecha de nacimiento en formato AAAA-MM-DD o referencia a celda con fecha",
+          "description": "Fecha de nacimiento en formato AAAA-MM-DD",
           "type": "string",
           "dimensionality": "scalar"
         },
@@ -51,8 +51,8 @@
       ]
     },
     {
-      "id": "RFC.GENERAR",
-      "name": "RFC.GENERAR",
+      "id": "CURP.RFC",
+      "name": "CURP.RFC",
       "description": "Genera el RFC de 13 caracteres de una persona física.",
       "helpUrl": "",
       "result": {
