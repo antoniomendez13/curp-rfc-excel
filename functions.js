@@ -4,7 +4,7 @@
 // ============= IDENTIDAD FISCAL MX - CUSTOM FUNCTIONS =======
 // ============================================================
 // Compatible con Excel Desktop (M365) y Excel Online
-// Uso: =CURP.GENERAR(...) | =RFC.GENERAR(...) | =CURP.EDAD(...)
+// Uso: =CURP.GENERAR(...) | =CURP.RFC(...) | =CURP.EDAD(...)
 // ============================================================
 
 // =================== UTILIDADES =============================
@@ -12,10 +12,15 @@
 function limpiarTexto(txt) {
   if (!txt) return "";
   const desde = "ÁÉÍÓÚÜÑáéíóúüñ";
-  const hacia  = "AEIOUUNAEIOUun".toUpperCase();
+  const hacia  = "AEIOUUNAEIOUU N".toUpperCase().split("");
+  // Corrección: tabla de reemplazos explícita
+  const mapa = {
+    "Á":"A","É":"E","Í":"I","Ó":"O","Ú":"U","Ü":"U","Ñ":"N",
+    "á":"A","é":"E","í":"I","ó":"O","ú":"U","ü":"U","ñ":"N"
+  };
   let resultado = txt.toUpperCase().trim();
-  for (let i = 0; i < desde.length; i++) {
-    resultado = resultado.replaceAll(desde[i], hacia[i]);
+  for (const [k, v] of Object.entries(mapa)) {
+    resultado = resultado.split(k).join(v);
   }
   return resultado;
 }
@@ -39,23 +44,11 @@ function consonanteInterna(txt) {
   return "X";
 }
 
-function formatFecha(fecha) {
-  const d = new Date(fecha);
-  const yy = String(d.getFullYear()).slice(-2);
-  const mm = String(d.getMonth() + 1).padStart(2, "0");
-  const dd = String(d.getDate()).padStart(2, "0");
-  return `${yy}${mm}${dd}`;
-}
-
+// FIX: normalizarSexo corregida — "M" sola = Mujer
 function normalizarSexo(sexo) {
   sexo = limpiarTexto(sexo);
-  if (["HOMBRE", "H", "MASCULINO", "M"].includes(sexo)) {
-    return sexo === "MUJER" || sexo === "FEMENINO" ? "M" : 
-           (sexo === "M" && !["HOMBRE","MASCULINO"].includes(sexo)) ? "M" : "H";
-  }
-  if (["MUJER", "FEMENINO"].includes(sexo)) return "M";
-  if (sexo === "H") return "H";
-  if (sexo === "M") return "M";
+  if (["H", "HOMBRE", "MASCULINO"].includes(sexo)) return "H";
+  if (["M", "MUJER", "FEMENINO"].includes(sexo))   return "M";
   return "";
 }
 
@@ -90,7 +83,7 @@ function curpValorCaracter(ch) {
  * @customfunction
  * @param {string} nombre Nombre(s) de la persona
  * @param {string} paterno Apellido paterno
- * @param {string} materno Apellido materno (dejar vacío si no tiene)
+ * @param {string} [materno] Apellido materno (opcional)
  * @param {string} fechaNacimiento Fecha de nacimiento (ej: "1990-05-15")
  * @param {string} sexo "H", "Hombre", "M" o "Mujer"
  * @param {string} estado Estado de nacimiento (ej: "Jalisco")
@@ -108,7 +101,7 @@ function GENERAR_CURP(nombre, paterno, materno, fechaNacimiento, sexo, estado) {
     if (!sexo)   return "ERROR: Sexo inválido (usa H/M/Hombre/Mujer)";
     if (!estado) return "ERROR: Estado inválido";
 
-    const fecha = new Date(fechaNacimiento);
+    const fecha = new Date(fechaNacimiento + "T12:00:00");
     if (isNaN(fecha)) return "ERROR: Fecha inválida";
 
     const yy = String(fecha.getFullYear()).slice(-2);
@@ -127,11 +120,9 @@ function GENERAR_CURP(nombre, paterno, materno, fechaNacimiento, sexo, estado) {
       consonanteInterna(materno || "") +
       consonanteInterna(nombre);
 
-    // Diferenciador de siglo
     const diferenciador = fecha.getFullYear() < 2000 ? "0" : "A";
     base += diferenciador;
 
-    // Dígito verificador
     let suma = 0;
     for (let i = 0; i < base.length; i++) {
       suma += curpValorCaracter(base[i]) * (19 - i);
@@ -151,17 +142,17 @@ function rfcFiltrarNombres(nombre, paterno, materno) {
   const prefijosNombre = ["JOSE ", "MARIA ", "J ", "MA "];
 
   for (const p of particulas) {
-    nombre  = nombre.replaceAll(p, "");
-    paterno = paterno.replaceAll(p, "");
-    materno = materno.replaceAll(p, "");
+    nombre  = nombre.split(p).join("");
+    paterno = paterno.split(p).join("");
+    materno = materno.split(p).join("");
   }
-  nombre  = nombre.replaceAll(".", "").replaceAll(",", "").trim();
-  paterno = paterno.replaceAll(".", "").replaceAll(",", "").trim();
-  materno = materno.replaceAll(".", "").replaceAll(",", "").trim();
+  nombre  = nombre.split(".").join("").split(",").join("").trim();
+  paterno = paterno.split(".").join("").split(",").join("").trim();
+  materno = materno.split(".").join("").split(",").join("").trim();
 
   if (nombre.includes(" ")) {
     for (const p of prefijosNombre) {
-      nombre = nombre.replaceAll(p, "");
+      nombre = nombre.split(p).join("");
     }
   }
 
@@ -190,9 +181,9 @@ function rfcHomoclave(nombre, paterno, materno) {
     const code = ch.charCodeAt(0);
     if (ch === " " || ch === "-") { cadena += "00"; }
     else if (ch === "Ñ" || ch === "Ü") { cadena += "10"; }
-    else if (code >= 65 && code <= 73) { cadena += String(code - 54); }  // A-I
-    else if (code >= 74 && code <= 82) { cadena += String(code - 53); }  // J-R
-    else if (code >= 83 && code <= 90) { cadena += String(code - 51); }  // S-Z
+    else if (code >= 65 && code <= 73) { cadena += String(code - 54); }
+    else if (code >= 74 && code <= 82) { cadena += String(code - 53); }
+    else if (code >= 83 && code <= 90) { cadena += String(code - 51); }
     else if (ch >= "0" && ch <= "9")   { cadena += ch.padStart(2, "0"); }
   }
 
@@ -230,7 +221,7 @@ function rfcDigitoVerificador(rfc) {
  * @customfunction
  * @param {string} nombre Nombre(s) de la persona
  * @param {string} paterno Apellido paterno
- * @param {string} materno Apellido materno
+ * @param {string} [materno] Apellido materno (opcional)
  * @param {string} fechaNacimiento Fecha de nacimiento (ej: "1990-05-15")
  * @returns {string} RFC de 13 caracteres
  */
@@ -240,7 +231,7 @@ function GENERAR_RFC(nombre, paterno, materno, fechaNacimiento) {
     paterno = limpiarTexto(paterno);
     materno = limpiarTexto(materno || "");
 
-    const fecha = new Date(fechaNacimiento);
+    const fecha = new Date(fechaNacimiento + "T12:00:00");
     if (isNaN(fecha)) return "ERROR: Fecha inválida";
 
     const yy = String(fecha.getFullYear()).slice(-2);
@@ -248,7 +239,6 @@ function GENERAR_RFC(nombre, paterno, materno, fechaNacimiento) {
     const dd = String(fecha.getDate()).padStart(2, "0");
     const strFecha = yy + mm + dd;
 
-    // Guardar originales para homoclave
     const nomOrig = nombre;
     const patOrig = paterno;
     const matOrig = materno;
@@ -314,7 +304,7 @@ function CURP_SEXO(curp) {
 function CURP_EDAD(curp) {
   const fechaStr = CURP_FECHA(curp);
   if (fechaStr.startsWith("ERROR")) return fechaStr;
-  const nac  = new Date(fechaStr);
+  const nac  = new Date(fechaStr + "T12:00:00");
   const hoy  = new Date();
   let edad = hoy.getFullYear() - nac.getFullYear();
   if (hoy < new Date(hoy.getFullYear(), nac.getMonth(), nac.getDate())) edad--;
@@ -348,7 +338,7 @@ function CURP_ESTADO(curp) {
 
 Office.onReady(function() {
   CustomFunctions.associate("CURP.GENERAR", GENERAR_CURP);
-  CustomFunctions.associate("RFC.GENERAR",  GENERAR_RFC);
+  CustomFunctions.associate("CURP.RFC",     GENERAR_RFC);
   CustomFunctions.associate("CURP.FECHA",   CURP_FECHA);
   CustomFunctions.associate("CURP.SEXO",    CURP_SEXO);
   CustomFunctions.associate("CURP.EDAD",    CURP_EDAD);
