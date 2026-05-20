@@ -2,161 +2,71 @@
   "allowAutoOpen": true,
   "functions": [
     {
-      "id": "CURP.GENERAR",
-      "name": "CURP.GENERAR",
+      "id": "GENERAR",
+      "name": "GENERAR",
       "description": "Genera la CURP de 18 caracteres de una persona.",
       "helpUrl": "",
-      "result": {
-        "type": "string",
-        "dimensionality": "scalar"
-      },
+      "result": { "type": "string", "dimensionality": "scalar" },
       "parameters": [
-        {
-          "name": "nombre",
-          "description": "Nombre(s) de la persona",
-          "type": "string",
-          "dimensionality": "scalar"
-        },
-        {
-          "name": "paterno",
-          "description": "Apellido paterno",
-          "type": "string",
-          "dimensionality": "scalar"
-        },
-        {
-          "name": "materno",
-          "description": "Apellido materno (dejar vacío si no tiene)",
-          "type": "string",
-          "dimensionality": "scalar",
-          "optional": true
-        },
-        {
-          "name": "fechaNacimiento",
-          "description": "Fecha de nacimiento en formato AAAA-MM-DD",
-          "type": "string",
-          "dimensionality": "scalar"
-        },
-        {
-          "name": "sexo",
-          "description": "Sexo: H, Hombre, M o Mujer",
-          "type": "string",
-          "dimensionality": "scalar"
-        },
-        {
-          "name": "estado",
-          "description": "Estado de nacimiento (ej: Jalisco, Ciudad de Mexico)",
-          "type": "string",
-          "dimensionality": "scalar"
-        }
+        { "name": "nombre", "description": "Nombre(s) de la persona", "type": "string", "dimensionality": "scalar" },
+        { "name": "paterno", "description": "Apellido paterno", "type": "string", "dimensionality": "scalar" },
+        { "name": "materno", "description": "Apellido materno (dejar vacío si no tiene)", "type": "string", "dimensionality": "scalar", "optional": true },
+        { "name": "fechaNacimiento", "description": "Fecha de nacimiento en formato AAAA-MM-DD", "type": "string", "dimensionality": "scalar" },
+        { "name": "sexo", "description": "Sexo: H, Hombre, M o Mujer", "type": "string", "dimensionality": "scalar" },
+        { "name": "estado", "description": "Estado de nacimiento (ej: Jalisco, Ciudad de Mexico)", "type": "string", "dimensionality": "scalar" }
       ]
     },
     {
-      "id": "CURP.RFC",
-      "name": "CURP.RFC",
+      "id": "RFC",
+      "name": "RFC",
       "description": "Genera el RFC de 13 caracteres de una persona física.",
       "helpUrl": "",
-      "result": {
-        "type": "string",
-        "dimensionality": "scalar"
-      },
+      "result": { "type": "string", "dimensionality": "scalar" },
       "parameters": [
-        {
-          "name": "nombre",
-          "description": "Nombre(s) de la persona",
-          "type": "string",
-          "dimensionality": "scalar"
-        },
-        {
-          "name": "paterno",
-          "description": "Apellido paterno",
-          "type": "string",
-          "dimensionality": "scalar"
-        },
-        {
-          "name": "materno",
-          "description": "Apellido materno",
-          "type": "string",
-          "dimensionality": "scalar",
-          "optional": true
-        },
-        {
-          "name": "fechaNacimiento",
-          "description": "Fecha de nacimiento en formato AAAA-MM-DD",
-          "type": "string",
-          "dimensionality": "scalar"
-        }
+        { "name": "nombre", "description": "Nombre(s) de la persona", "type": "string", "dimensionality": "scalar" },
+        { "name": "paterno", "description": "Apellido paterno", "type": "string", "dimensionality": "scalar" },
+        { "name": "materno", "description": "Apellido materno", "type": "string", "dimensionality": "scalar", "optional": true },
+        { "name": "fechaNacimiento", "description": "Fecha de nacimiento en formato AAAA-MM-DD", "type": "string", "dimensionality": "scalar" }
       ]
     },
     {
-      "id": "CURP.FECHA",
-      "name": "CURP.FECHA",
+      "id": "FECHA",
+      "name": "FECHA",
       "description": "Extrae la fecha de nacimiento de una CURP. Devuelve texto AAAA-MM-DD.",
       "helpUrl": "",
-      "result": {
-        "type": "string",
-        "dimensionality": "scalar"
-      },
+      "result": { "type": "string", "dimensionality": "scalar" },
       "parameters": [
-        {
-          "name": "curp",
-          "description": "CURP de 18 caracteres",
-          "type": "string",
-          "dimensionality": "scalar"
-        }
+        { "name": "curp", "description": "CURP de 18 caracteres", "type": "string", "dimensionality": "scalar" }
       ]
     },
     {
-      "id": "CURP.SEXO",
-      "name": "CURP.SEXO",
+      "id": "SEXO",
+      "name": "SEXO",
       "description": "Extrae el sexo de una CURP. Devuelve Hombre o Mujer.",
       "helpUrl": "",
-      "result": {
-        "type": "string",
-        "dimensionality": "scalar"
-      },
+      "result": { "type": "string", "dimensionality": "scalar" },
       "parameters": [
-        {
-          "name": "curp",
-          "description": "CURP de 18 caracteres",
-          "type": "string",
-          "dimensionality": "scalar"
-        }
+        { "name": "curp", "description": "CURP de 18 caracteres", "type": "string", "dimensionality": "scalar" }
       ]
     },
     {
-      "id": "CURP.EDAD",
-      "name": "CURP.EDAD",
+      "id": "EDAD",
+      "name": "EDAD",
       "description": "Calcula la edad actual a partir de una CURP.",
       "helpUrl": "",
-      "result": {
-        "type": "number",
-        "dimensionality": "scalar"
-      },
+      "result": { "type": "number", "dimensionality": "scalar" },
       "parameters": [
-        {
-          "name": "curp",
-          "description": "CURP de 18 caracteres",
-          "type": "string",
-          "dimensionality": "scalar"
-        }
+        { "name": "curp", "description": "CURP de 18 caracteres", "type": "string", "dimensionality": "scalar" }
       ]
     },
     {
-      "id": "CURP.ESTADO",
-      "name": "CURP.ESTADO",
+      "id": "ESTADO",
+      "name": "ESTADO",
       "description": "Extrae el estado de nacimiento de una CURP.",
       "helpUrl": "",
-      "result": {
-        "type": "string",
-        "dimensionality": "scalar"
-      },
+      "result": { "type": "string", "dimensionality": "scalar" },
       "parameters": [
-        {
-          "name": "curp",
-          "description": "CURP de 18 caracteres",
-          "type": "string",
-          "dimensionality": "scalar"
-        }
+        { "name": "curp", "description": "CURP de 18 caracteres", "type": "string", "dimensionality": "scalar" }
       ]
     }
   ]
