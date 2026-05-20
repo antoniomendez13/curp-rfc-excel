@@ -8,12 +8,12 @@
       "helpUrl": "",
       "result": { "type": "string", "dimensionality": "scalar" },
       "parameters": [
-        { "name": "nombre",          "description": "Nombre(s)",              "type": "string", "dimensionality": "scalar" },
-        { "name": "paterno",         "description": "Apellido paterno",       "type": "string", "dimensionality": "scalar" },
-        { "name": "materno",         "description": "Apellido materno",       "type": "string", "dimensionality": "scalar", "optional": true },
-        { "name": "fechaNacimiento", "description": "Fecha AAAA-MM-DD",       "type": "string", "dimensionality": "scalar" },
-        { "name": "sexo",            "description": "H, Hombre, M o Mujer",  "type": "string", "dimensionality": "scalar" },
-        { "name": "estado",          "description": "Estado de nacimiento",   "type": "string", "dimensionality": "scalar" }
+        { "name": "nombre",          "description": "Nombre(s)",             "type": "string", "dimensionality": "scalar" },
+        { "name": "paterno",         "description": "Apellido paterno",      "type": "string", "dimensionality": "scalar" },
+        { "name": "materno",         "description": "Apellido materno",      "type": "string", "dimensionality": "scalar", "optional": true },
+        { "name": "fechaNacimiento", "description": "Fecha AAAA-MM-DD",      "type": "string", "dimensionality": "scalar" },
+        { "name": "sexo",            "description": "H, Hombre, M o Mujer", "type": "string", "dimensionality": "scalar" },
+        { "name": "estado",          "description": "Estado de nacimiento",  "type": "string", "dimensionality": "scalar" }
       ]
     },
     {
