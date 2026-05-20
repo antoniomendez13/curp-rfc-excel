@@ -1,17 +1,11 @@
 /* global CustomFunctions, Office */
-
 "use strict";
-
-// ─── Utilidades ──────────────────────────────────────────────────────────────
 
 function limpiarTexto(txt) {
   if (!txt) return "";
-  const mapa = {
-    "Á":"A","É":"E","Í":"I","Ó":"O","Ú":"U","Ü":"U","Ñ":"N",
-    "á":"A","é":"E","í":"I","ó":"O","ú":"U","ü":"U","ñ":"N"
-  };
-  let r = txt.toUpperCase().trim();
-  for (const k in mapa) r = r.split(k).join(mapa[k]);
+  var mapa = {"Á":"A","É":"E","Í":"I","Ó":"O","Ú":"U","Ü":"U","Ñ":"N","á":"A","é":"E","í":"I","ó":"O","ú":"U","ü":"U","ñ":"N"};
+  var r = txt.toUpperCase().trim();
+  for (var k in mapa) r = r.split(k).join(mapa[k]);
   return r;
 }
 
@@ -56,8 +50,6 @@ function curpValorCaracter(ch) {
   return "0123456789ABCDEFGHIJKLMNNOPQRSTUVWXYZ".indexOf(ch);
 }
 
-// ─── Función GENERAR ──────────────────────────────────────────────────────────
-
 function GENERAR(nombre, paterno, materno, fechaNacimiento, sexo, estado) {
   try {
     nombre  = limpiarTexto(nombre);
@@ -87,8 +79,6 @@ function GENERAR(nombre, paterno, materno, fechaNacimiento, sexo, estado) {
   } catch (e) { return "ERROR: " + e.message; }
 }
 
-// ─── Función RFC ──────────────────────────────────────────────────────────────
-
 function rfcFiltrar(nombre, paterno, materno) {
   var part = ["DE ","DEL ","LA ","LOS ","LAS ","Y ","MC ","MAC ","VON ","VAN "];
   for (var i = 0; i < part.length; i++) {
@@ -108,7 +98,7 @@ function rfcFiltrar(nombre, paterno, materno) {
 
 function rfcProhibidas(rfc) {
   var p = ["BUEI","BUEY","CACA","CACO","CAGA","CAGO","CAKA","CAKO","COGE","COJA",
-    "COJE","COJI","COJO","CULO","FETO","GUEY","JOTO","KACA","KACO","KAGA","KAGO",
+    "CEJE","COJI","COJO","CULO","FETO","GUEY","JOTO","KACA","KACO","KAGA","KAGO",
     "KOGE","KOJO","KAKA","KULO","MAME","MAMO","MEAR","MEAS","MEON","MION","MOCO",
     "MULA","PEDA","PEDO","PENE","PUTA","PUTO","QULO","RATA","RUIN"];
   return p.indexOf(rfc.slice(0, 4)) >= 0 ? rfc.slice(0, 3) + "X" + rfc.slice(4) : rfc;
@@ -126,7 +116,7 @@ function rfcHomoclave(nombre, paterno, materno) {
     else if (c >= 65 && c <= 73) cad += String(c - 54);
     else if (c >= 74 && c <= 82) cad += String(c - 53);
     else if (c >= 83 && c <= 90) cad += String(c - 51);
-    else if (ch >= "0" && ch <= "9") cad += ch.length === 1 ? "0" + ch : ch;
+    else if (ch >= "0" && ch <= "9") cad += "0" + ch;
   }
   var suma = 0;
   for (var j = 0; j < cad.length - 1; j++)
@@ -170,8 +160,6 @@ function RFC(nombre, paterno, materno, fechaNacimiento) {
   } catch (e) { return "ERROR: " + e.message; }
 }
 
-// ─── Función FECHA ────────────────────────────────────────────────────────────
-
 function FECHA(curp) {
   curp = limpiarTexto(curp);
   if (curp.length !== 18) return "ERROR: CURP invalida";
@@ -180,15 +168,11 @@ function FECHA(curp) {
   return (siglo + anio) + "-" + curp.slice(6, 8) + "-" + curp.slice(8, 10);
 }
 
-// ─── Función SEXO ─────────────────────────────────────────────────────────────
-
 function SEXO(curp) {
   curp = limpiarTexto(curp);
   if (curp.length !== 18) return "ERROR: CURP invalida";
   return curp[10] === "H" ? "Hombre" : curp[10] === "M" ? "Mujer" : "ERROR";
 }
-
-// ─── Función EDAD ─────────────────────────────────────────────────────────────
 
 function EDAD(curp) {
   var f = FECHA(curp);
@@ -199,8 +183,6 @@ function EDAD(curp) {
   if (hoy < new Date(hoy.getFullYear(), nac.getMonth(), nac.getDate())) edad--;
   return edad;
 }
-
-// ─── Función ESTADO ───────────────────────────────────────────────────────────
 
 function ESTADO(curp) {
   curp = limpiarTexto(curp);
@@ -217,8 +199,6 @@ function ESTADO(curp) {
   };
   return estados[curp.slice(11, 13)] || "Desconocido";
 }
-
-// ─── Registro de funciones ────────────────────────────────────────────────────
 
 function registrar() {
   CustomFunctions.associate("GENERAR", GENERAR);
