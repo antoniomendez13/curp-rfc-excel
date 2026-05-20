@@ -329,13 +329,3 @@ function CURP_ESTADO(curp) {
   };
   return estados[cod] || "Desconocido";
 }
-
-// =================== REGISTRO DE FUNCIONES ==================
-// IMPORTANTE: CustomFunctions.associate debe estar fuera de Office.onReady
-
-CustomFunctions.associate("CURP.GENERAR", GENERAR_CURP);
-CustomFunctions.associate("CURP.RFC",     GENERAR_RFC);
-CustomFunctions.associate("CURP.FECHA",   CURP_FECHA);
-CustomFunctions.associate("CURP.SEXO",    CURP_SEXO);
-CustomFunctions.associate("CURP.EDAD",    CURP_EDAD);
-CustomFunctions.associate("CURP.ESTADO",  CURP_ESTADO);
