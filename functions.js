@@ -245,9 +245,20 @@ function ESTADO(curp) {
 }
 
 // Registro de funciones
-CustomFunctions.associate("GENERAR", GENERAR);
-CustomFunctions.associate("RFC",     RFC);
-CustomFunctions.associate("FECHA",   FECHA);
-CustomFunctions.associate("SEXO",    SEXO);
-CustomFunctions.associate("EDAD",    EDAD);
-CustomFunctions.associate("ESTADO",  ESTADO);
+if (typeof Office !== "undefined") {
+  Office.onReady(function() {
+    CustomFunctions.associate("GENERAR", GENERAR);
+    CustomFunctions.associate("RFC",     RFC);
+    CustomFunctions.associate("FECHA",   FECHA);
+    CustomFunctions.associate("SEXO",    SEXO);
+    CustomFunctions.associate("EDAD",    EDAD);
+    CustomFunctions.associate("ESTADO",  ESTADO);
+  });
+} else {
+  CustomFunctions.associate("GENERAR", GENERAR);
+  CustomFunctions.associate("RFC",     RFC);
+  CustomFunctions.associate("FECHA",   FECHA);
+  CustomFunctions.associate("SEXO",    SEXO);
+  CustomFunctions.associate("EDAD",    EDAD);
+  CustomFunctions.associate("ESTADO",  ESTADO);
+}
