@@ -6,162 +6,67 @@
       "name": "GENERAR",
       "description": "Genera la CURP de 18 caracteres de una persona.",
       "helpUrl": "",
-      "result": {
-        "type": "string",
-        "dimensionality": "scalar"
-      },
+      "result": { "type": "string", "dimensionality": "scalar" },
       "parameters": [
-        {
-          "name": "nombre",
-          "description": "Nombre(s)",
-          "type": "string",
-          "dimensionality": "scalar"
-        },
-        {
-          "name": "paterno",
-          "description": "Apellido paterno",
-          "type": "string",
-          "dimensionality": "scalar"
-        },
-        {
-          "name": "materno",
-          "description": "Apellido materno",
-          "type": "string",
-          "dimensionality": "scalar",
-          "optional": true
-        },
-        {
-          "name": "fechaNacimiento",
-          "description": "Fecha AAAA-MM-DD",
-          "type": "string",
-          "dimensionality": "scalar"
-        },
-        {
-          "name": "sexo",
-          "description": "H, Hombre, M o Mujer",
-          "type": "string",
-          "dimensionality": "scalar"
-        },
-        {
-          "name": "estado",
-          "description": "Estado de nacimiento",
-          "type": "string",
-          "dimensionality": "scalar"
-        }
+        { "name": "nombre",          "description": "Nombre(s)",              "type": "string", "dimensionality": "scalar" },
+        { "name": "paterno",         "description": "Apellido paterno",       "type": "string", "dimensionality": "scalar" },
+        { "name": "materno",         "description": "Apellido materno",       "type": "string", "dimensionality": "scalar", "optional": true },
+        { "name": "fechaNacimiento", "description": "Fecha AAAA-MM-DD",       "type": "string", "dimensionality": "scalar" },
+        { "name": "sexo",            "description": "H, Hombre, M o Mujer",  "type": "string", "dimensionality": "scalar" },
+        { "name": "estado",          "description": "Estado de nacimiento",   "type": "string", "dimensionality": "scalar" }
       ]
     },
-
     {
       "id": "RFC",
       "name": "RFC",
-      "description": "Genera el RFC de 13 caracteres.",
+      "description": "Genera el RFC de 13 caracteres de una persona fisica.",
       "helpUrl": "",
-      "result": {
-        "type": "string",
-        "dimensionality": "scalar"
-      },
+      "result": { "type": "string", "dimensionality": "scalar" },
       "parameters": [
-        {
-          "name": "nombre",
-          "description": "Nombre(s)",
-          "type": "string",
-          "dimensionality": "scalar"
-        },
-        {
-          "name": "paterno",
-          "description": "Apellido paterno",
-          "type": "string",
-          "dimensionality": "scalar"
-        },
-        {
-          "name": "materno",
-          "description": "Apellido materno",
-          "type": "string",
-          "dimensionality": "scalar",
-          "optional": true
-        },
-        {
-          "name": "fechaNacimiento",
-          "description": "Fecha AAAA-MM-DD",
-          "type": "string",
-          "dimensionality": "scalar"
-        }
+        { "name": "nombre",          "description": "Nombre(s)",        "type": "string", "dimensionality": "scalar" },
+        { "name": "paterno",         "description": "Apellido paterno", "type": "string", "dimensionality": "scalar" },
+        { "name": "materno",         "description": "Apellido materno", "type": "string", "dimensionality": "scalar", "optional": true },
+        { "name": "fechaNacimiento", "description": "Fecha AAAA-MM-DD", "type": "string", "dimensionality": "scalar" }
       ]
     },
-
     {
       "id": "FECHA",
       "name": "FECHA",
-      "description": "Extrae fecha de nacimiento desde CURP.",
+      "description": "Extrae la fecha de nacimiento desde una CURP.",
       "helpUrl": "",
-      "result": {
-        "type": "string",
-        "dimensionality": "scalar"
-      },
+      "result": { "type": "string", "dimensionality": "scalar" },
       "parameters": [
-        {
-          "name": "curp",
-          "description": "CURP",
-          "type": "string",
-          "dimensionality": "scalar"
-        }
+        { "name": "curp", "description": "CURP de 18 caracteres", "type": "string", "dimensionality": "scalar" }
       ]
     },
-
     {
       "id": "SEXO",
       "name": "SEXO",
-      "description": "Extrae sexo desde CURP.",
+      "description": "Extrae el sexo desde una CURP.",
       "helpUrl": "",
-      "result": {
-        "type": "string",
-        "dimensionality": "scalar"
-      },
+      "result": { "type": "string", "dimensionality": "scalar" },
       "parameters": [
-        {
-          "name": "curp",
-          "description": "CURP",
-          "type": "string",
-          "dimensionality": "scalar"
-        }
+        { "name": "curp", "description": "CURP de 18 caracteres", "type": "string", "dimensionality": "scalar" }
       ]
     },
-
     {
       "id": "EDAD",
       "name": "EDAD",
-      "description": "Calcula edad desde CURP.",
+      "description": "Calcula la edad actual desde una CURP.",
       "helpUrl": "",
-      "result": {
-        "type": "number",
-        "dimensionality": "scalar"
-      },
+      "result": { "type": "number", "dimensionality": "scalar" },
       "parameters": [
-        {
-          "name": "curp",
-          "description": "CURP",
-          "type": "string",
-          "dimensionality": "scalar"
-        }
+        { "name": "curp", "description": "CURP de 18 caracteres", "type": "string", "dimensionality": "scalar" }
       ]
     },
-
     {
       "id": "ESTADO",
       "name": "ESTADO",
-      "description": "Extrae estado desde CURP.",
+      "description": "Extrae el estado de nacimiento desde una CURP.",
       "helpUrl": "",
-      "result": {
-        "type": "string",
-        "dimensionality": "scalar"
-      },
+      "result": { "type": "string", "dimensionality": "scalar" },
       "parameters": [
-        {
-          "name": "curp",
-          "description": "CURP",
-          "type": "string",
-          "dimensionality": "scalar"
-        }
+        { "name": "curp", "description": "CURP de 18 caracteres", "type": "string", "dimensionality": "scalar" }
       ]
     }
   ]
